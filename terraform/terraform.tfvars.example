@@ -1,0 +1,6 @@
+aws_account_id = "<AWS account>"
+
+personal_cidr = "<source cidr to create ingress port 22 access with>"
+
+# tmkms_pcr0 = "<fill in at later step>"
+# tmkms_pcr4 = "<fill in at later step>"
