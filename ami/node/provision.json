@@ -1,0 +1,61 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "aws_region": "{{env `AWS_REGION`}}",
+    "vpc": "{{env `AWS_PACKER_VPC`}}",
+    "subnet": "{{env `AWS_PACKER_SUBNET`}}"
+  },
+  "sensitive-variables": ["aws_access_key", "aws_secret_key"],
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "{{user `aws_region`}}",
+      "vpc_id": "{{user `vpc`}}",
+      "subnet_id": "{{user `subnet`}}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20210108",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "provenance-io-node-{{timestamp}}",
+      "ami_regions": [
+        "us-east-1",
+        "us-east-2",
+        "us-west-1",
+        "us-west-2"
+      ],
+      "ami_description": "Provenance blockchain base image for standard nodes."
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "provenanced.conf",
+      "destination": "/tmp/provenanced.conf"
+    },
+    {
+      "type": "shell",
+      "script": "install.sh"
+    },
+    {
+      "type": "file",
+      "source": "configure.sh",
+      "destination": "/home/ubuntu/configure.sh"
+    }
+  ]
+}

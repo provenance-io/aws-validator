@@ -1,0 +1,27 @@
+name: Packer Validate
+on:
+  push:
+    paths:
+      - 'ami/**'
+jobs:
+  packer_validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Validate Node Template
+      uses: hashicorp/packer-github-actions@master
+      with:
+        command: validate
+        arguments: -syntax-only
+        target: provision.json
+        working_directory: ami/node
+
+    - name: Validate Tmkms Template
+      uses: hashicorp/packer-github-actions@master
+      with:
+        command: validate
+        arguments: -syntax-only
+        target: provision.json
+        working_directory: ami/tmkms
