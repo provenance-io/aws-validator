@@ -15,25 +15,17 @@
       "region": "{{user `aws_region`}}",
       "vpc_id": "{{user `vpc`}}",
       "subnet_id": "{{user `subnet`}}",
-      "source_ami_filter": {
-        "filters": {
-          "virtualization-type": "hvm",
-          "name": "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20210108",
-          "root-device-type": "ebs"
-        },
-        "owners": ["099720109477"],
-        "most_recent": true
-      },
+      "source_ami": "ami-0d5eff06f840b45e9",
       "instance_type": "t2.micro",
-      "ssh_username": "ubuntu",
-      "ami_name": "provenance-io-node-{{timestamp}}",
+      "ssh_username": "ec2-user",
+      "ami_name": "provenance-io-tmkms-{{timestamp}}",
       "ami_regions": [
         "us-east-1",
         "us-east-2",
         "us-west-1",
         "us-west-2"
       ],
-      "ami_description": "Provenance blockchain base image for standard nodes."
+      "ami_description": "Provenance blockchain base image for tmkms signing nodes."
     }
   ],
   "provisioners": [
@@ -45,17 +37,17 @@
     },
     {
       "type": "file",
-      "source": "provenanced.conf",
-      "destination": "/tmp/provenanced.conf"
+      "source": "run.sh",
+      "destination": "/tmp/run.sh"
+    },
+    {
+      "type": "file",
+      "source": "tmkms.service",
+      "destination": "/tmp/tmkms.service"
     },
     {
       "type": "shell",
       "script": "install.sh"
-    },
-    {
-      "type": "file",
-      "source": "configure.sh",
-      "destination": "/home/ubuntu/configure.sh"
     }
   ]
 }

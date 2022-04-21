@@ -17,6 +17,7 @@ sudo apt-get install -y zip unzip
 
 # stop supervisor since we're just creating an ami
 sudo service supervisor stop
+sudo mv /tmp/provenanced.conf /etc/supervisor/conf.d/
 
 echo "Downloading and installing go lang..."
 wget "https://golang.org/dl/$GO_VERSION.tar.gz" -P /tmp
@@ -45,8 +46,3 @@ sudo ln -s ${PBC_GENESIS_PATH} ${DAEMON_HOME}/current
 sudo chown -R ubuntu:ubuntu $DAEMON_HOME
 
 echo "Installation completed!"
-
-# echo "Downloading and installing provenance..."
-# PBC_VERSION=$GENESIS_VERSION
-# wget "https://github.com/provenance-io/provenance/releases/download/$PBC_VERSION/provenance-linux-amd64-$PBC_VERSION.zip" -P /tmp
-# sudo unzip "/tmp/provenance-linux-amd64-$PBC_VERSION.zip" -d ${PBC_GENESIS_PATH}
