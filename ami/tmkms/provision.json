@@ -25,7 +25,8 @@
         "us-west-1",
         "us-west-2"
       ],
-      "ami_description": "Provenance blockchain base image for tmkms signing nodes."
+      "ami_description": "Provenance blockchain base image for tmkms signing nodes.",
+      "ami_groups": "all"
     }
   ],
   "provisioners": [

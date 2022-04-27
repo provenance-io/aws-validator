@@ -24,6 +24,4 @@ mv /tmp/provenance/bin cosmovisor/genesis/
 echo -e "\nexport LD_LIBRARY_PATH=\"/home/ubuntu/cosmovisor/current/bin:/usr/local/lib\"\n" >> ~/.bashrc
 source ~/.bashrc
 
-sudo service supervisor start
-
 echo "Config setup completed!"
