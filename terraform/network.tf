@@ -15,16 +15,6 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-resource "aws_subnet" "internal_private" {
-  vpc_id            = aws_vpc.main.id
-  availability_zone = "us-west-2a"
-  cidr_block        = "10.0.20.0/24"
-
-  tags = {
-    Name = "demo_internal_private"
-  }
-}
-
 resource "aws_eip" "nat_a" {
   vpc = true
 
@@ -95,18 +85,9 @@ resource "aws_route_table" "private_route_table" {
   tags = {
     Name = "demo_private_route_table"
   }
-
-  lifecycle {
-    ignore_changes = [route]
-  }
 }
 
 resource "aws_route_table_association" "main_a_private_route_table" {
   subnet_id      = aws_subnet.main_a_private.id
   route_table_id = aws_route_table.private_route_table.id
-}
-
-resource "aws_network_interface" "interface_a_public" {
-  subnet_id   = aws_subnet.main_a_public.id
-  private_ips = ["10.0.10.10"]
 }

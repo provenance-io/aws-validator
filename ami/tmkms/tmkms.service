@@ -1,6 +1,6 @@
 [Unit]
 Description=Tendermint KMS
-ConditionPathExists=/home/ec2-user/tmkms.eif
+ConditionPathExists=/home/ec2-user/.tmkms/tmkms.eif
 After=network.target
 
 [Service]

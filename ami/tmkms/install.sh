@@ -38,16 +38,14 @@ sudo cp target/x86_64-unknown-linux-gnu/release/tmkms-nitro-helper /usr/local/bi
 cd ..
 mkdir /home/ec2-user/.tmkms
 
-# echo "Configuring nitro service..."
-# sudo mv /tmp/validator_vsock_proxy.yaml /home/ec2-user/validator_vsock_proxy.yaml
-# sudo chown ec2-user:ec2-user /home/ec2-user/validator_vsock_proxy.yaml
-# sudo mv /tmp/run.sh /home/ec2-user/run.sh
-# sudo chown ec2-user:ec2-user /home/ec2-user/run.sh
-# chmod a+x run.sh
-# sudo mv /tmp/tmkms.service /lib/systemd/system/tmkms.service
-# sudo systemctl daemon-reload
-# sudo systemctl enable tmkms.service
-# sudo systemctl stop tmkms
+# echo "Configuring tmkms service..."
+sudo mv /tmp/run.sh /home/ec2-user/run.sh
+sudo chown ec2-user:ec2-user /home/ec2-user/run.sh
+chmod a+x run.sh
+sudo mv /tmp/tmkms.service /lib/systemd/system/tmkms.service
+sudo systemctl daemon-reload
+sudo systemctl enable tmkms.service
+sudo systemctl stop tmkms
 
 sudo systemctl stop docker
 
